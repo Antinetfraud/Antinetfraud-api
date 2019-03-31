@@ -14,6 +14,6 @@ class QuestionController extends ApiController
         $questions = Question::orderBy(DB::raw('RAND()'))
             ->take(10)
             ->get();
-        $this->responseJson(['questions'=>$questions->toArray()]);
+        return $this->responseJson(['questions'=>$questions->toArray()]);
     }
 }
