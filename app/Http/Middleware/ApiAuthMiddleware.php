@@ -20,8 +20,8 @@ class ApiAuthMiddleware
         $user = User::find($request->id);
         if ($user == null) {
             return $this->unauthorized("user not found");
-        } else if ($user->state == 0) {
-            return $this->unauthorized("用户邮箱没激活");
+//        } else if ($user->state == 0) {
+//            return $this->unauthorized("用户邮箱没激活");
         } else if ($user->state == 2) {
             return $this->unauthorized("用户被封禁");
         } else if ($user->token == null || $user->token_time - time() > 172800) {
@@ -38,8 +38,8 @@ class ApiAuthMiddleware
     protected function unauthorized($info)
     {
         $data['code'] = 401;
-        $data['message'] = 'unauthorized';
-        $data['info'] = $info;
+        $data['message'] = 'unauthorized'." ".$info;
+//        $data['info'] = $info;
         return response()->json($data);
     }
 }
