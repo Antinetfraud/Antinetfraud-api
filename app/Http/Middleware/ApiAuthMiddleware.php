@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Model\User;
 use Closure;
+use Illuminate\Support\Facades\Log;
 
 class ApiAuthMiddleware
 {
@@ -29,6 +30,9 @@ class ApiAuthMiddleware
         } else if (time() - $request->timestamp > 300) {
             return $this->unauthorized("timestamp timeout");
         } else if ($request->sign == md5($user->token . $request->timestamp . $path)) {
+            return $next($request);
+        } else if ($request->sign == $user->token){
+            # 临时增加的校验，给app使用
             return $next($request);
         } else {
             return $this->unauthorized("sign not match");
