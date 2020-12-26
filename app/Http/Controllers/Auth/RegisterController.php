@@ -87,7 +87,7 @@ class RegisterController extends ApiController
         event(new Registered($userRegister = $this->create($request->all())));
         $this->guard()->login($userRegister);
         $user = Auth()->user();
-        $userMailer->sendActivateEmail($user);
+//        $userMailer->sendActivateEmail($user);
         return $this->registered($request, $userRegister)
             ? $this->responseJson()
             : $this->somethingWrong("注册失败");
